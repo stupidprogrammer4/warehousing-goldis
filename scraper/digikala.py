@@ -39,39 +39,57 @@ class DigiKalaScraper(Scraper):
             raise ScraperException('login error', original_exception=err)
         
     async def __get_products_of_page(self, url: str, page_number: int) -> List[ElementHandle]:
-        page = await self.context.new_page()
-        await page.goto(f'{url}/?page={page_number}')
-        await page.wait_for_timeout(2000)
-        divs = await page.query_selector_all('.product-list_ProductList__item__LiiNI')
-        return divs
+        try:
+            page = await self.context.new_page()
+            await page.goto(f'{url}/?page={page_number}')
+            await page.wait_for_timeout(2000)
+            divs = await page.query_selector_all('.product-list_ProductList__item__LiiNI')
+            return divs
+        except Exception as err:
+            raise ScraperException('get products of page error', original_exception=err)
         
     async def __extract_existence(self, ele: ElementHandle):
-        exist_ele = await ele.query_selector('span:not([class]):not([data-testid])')
-        return exist_ele is None
+        try:
+            exist_ele = await ele.query_selector('span:not([class]):not([data-testid])')
+            return exist_ele is None
+        except Exception as err:
+            raise ScraperException('extract check existence of product error', original_exception=err)
     
     async def __extract_title(self, ele: ElementHandle):
-        title_ele = await ele.query_selector('h3')
-        return await title_ele.inner_text()
+        try:
+            title_ele = await ele.query_selector('h3')
+            return await title_ele.inner_text()
+        except Exception as err:
+            raise ScraperException('extract title error', original_exception=err)
     
     async def __extract_dkp(self, ele: ElementHandle) -> str:
-        link_ele = await ele.query_selector('a')
-        href = await link_ele.get_attribute('href')
-        return re.search(r'dkp-[0-9]+', href).group()
+        try:
+            link_ele = await ele.query_selector('a')
+            href = await link_ele.get_attribute('href')
+            return re.search(r'dkp-[0-9]+', href).group()
+        except Exception as err:
+            raise ScraperException('extract dkp error', original_exception=err)
     
     async def __extract_discount(self, ele: ElementHandle) -> int:
-        discount_ele = await ele.query_selector('span[data-testid="price-discount-percent"]')
-        if not discount_ele:
-            return 0
-        discount = await discount_ele.inner_text()
-        discount_value = re.search(r'\d+', discount).group()
-        return convert_fa_numbers(discount_value)
+        try:
+            discount_ele = await ele.query_selector('span[data-testid="price-discount-percent"]')
+            if not discount_ele:
+                return 0
+            discount = await discount_ele.inner_text()
+            discount_value = re.search(r'\d+', discount).group()
+            return convert_fa_numbers(discount_value)
+        except Exception as err:
+            raise ScraperException('extract discount error', original_exception=err)
     
     async def __extract_score(self, ele: ElementHandle) -> float:
-        score_ele = await ele.query_selector('p[class="text-body2-strong text-neutral-700"]')
-        if not score_ele:
-            return 0.
-        score = await score_ele.inner_text()
-        return float(score)
+        try:
+            score_ele = await ele.query_selector('p[class="text-body2-strong text-neutral-700"]')
+            if not score_ele:
+                return 0.
+            score = await score_ele.inner_text()
+            return float(score)
+        except Exception as err:
+            raise ScraperException('extract score exception', original_exception=err)
     
     async def __list_all_products_rotate_proxy(self, url: str, page_count):
         """
@@ -82,24 +100,24 @@ class DigiKalaScraper(Scraper):
     
     async def __list_products_with_limit(self, url: str, page_count: int, limit: int) -> List[Dict]:
 
-        result: List[List[ElementHandle]] = []
+        try:
+            result: List[List[ElementHandle]] = []
 
-        for i in range(0, page_count, limit):
-            if i + limit > page_count:
-                break
-            result.extend(await asyncio.gather(*[self.__get_products_of_page(url, i+j+1) for j in range(limit)]))
+            for i in range(0, page_count, limit):
+                if i + limit > page_count:
+                    break
+                result.extend(await asyncio.gather(*[self.__get_products_of_page(url, i+j+1) for j in range(limit)]))
 
-        st_page = limit * (page_count//limit)
+            st_page = limit * (page_count//limit)
 
-        result.extend(await asyncio.gather(*[self.__get_products_of_page(url, j+1) for j in range(st_page, page_count)]))
-
+            result.extend(await asyncio.gather(*[self.__get_products_of_page(url, j+1) for j in range(st_page, page_count)]))
+        except Exception as err:
+            raise ScraperException('gathering data from pages error', original_exception=err)
 
         divs: List[ElementHandle] = []
-
         for items in result:
             for div in items:
                 divs.append(div)
-
         products: List[Dict] = []
         for div in divs:
             title = await self.__extract_title(div)
@@ -107,10 +125,8 @@ class DigiKalaScraper(Scraper):
             dkp = await self.__extract_dkp(div)
             discount = await self.__extract_discount(div)
             score = await self.__extract_score(div)
-
             products.append({'dkp': dkp, 'title': title, 'is_exist': is_exist, 'discount': discount, 'score': score})
-
-        return products       
+        return products  
             
 
     async def login(self, login_url: str, **kwargs):
