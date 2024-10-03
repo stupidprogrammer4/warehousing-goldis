@@ -1,6 +1,6 @@
-from playwright.async_api import Playwright
 from abc import ABC, abstractmethod
 import asyncio
+from aiohttp import ClientSession
 
 
 class ScraperException(Exception):
@@ -9,29 +9,25 @@ class ScraperException(Exception):
         self.original_exception = original_exception
         super().__init__(self.message)
 
+    def __str__(self):
+        if self.original_exception:
+            return f"{self.message}. Original exception: {self.original_exception}"
+        return self.message
+
 
 class Scraper(ABC):
-    def __init__(self, playwright: Playwright, browser_type: str, proxies=None):
+    def __init__(self, session: ClientSession):
         super().__init__()
-        self.proxies = proxies
-        match browser_type:
-            case 'firefox':
-                self.btype = playwright.firefox
-            case 'chromium':
-                self.btype = playwright.chromium
-            case 'webkit':
-                self.btype = playwright.webkit
-            case _:
-                raise ScraperException('browser type not exist')
+        self.session = session
             
     async def __aenter__(self):
-        self.browser = await self.btype.launch(headless=False)
-        self.context = await self.browser.new_context()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        await self.context.close()
-        await self.browser.close()
+        try:
+            await self.session.close()
+        except Exception as err:
+            raise ScraperException('cannot close session', original_exception=err)
 
     @abstractmethod
     async def decrease_product(self, **kwargs):     
