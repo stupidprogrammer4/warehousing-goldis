@@ -7,6 +7,29 @@ from .scraper import Scraper, ScraperException
 import aiohttp
 import itertools
 
+class DigiKalaProduct(object):
+    def __init__(self, dkp_id, title_fa) -> None:
+        super().__init__()
+        self.dkp_id = dkp_id
+        self.title_fa = title_fa
+        self.variants = []
+
+    def add_variant(self, variant):
+        self.variants.append(
+            {
+                'size': variant['size']['title'],
+                'price': variant['price']['selling_price']
+            }
+        )
+
+    def to_dict(self):
+        return {
+            'id' : self.dkp_id,
+            'title': self.title_fa,
+            'variants': self.variants,
+            'status': 'موجود' if self.variants else 'ناموجود'     
+        }
+
 class DigiKalaScraper(Scraper):
     def __init__(self, store_code: str, limit_count: int):
         super().__init__()
@@ -27,16 +50,14 @@ class DigiKalaScraper(Scraper):
                 implement login with phonenumber and sms code
         """
 
-    async def __collect_goldis_products(self, url: str):
+    async def __collect_goldis_products(self, url: str, dkp: DigiKalaProduct):
         try:
             async with self.session.get(url) as resp:
                 json = await resp.json()
 
-            products = []    
             for var in json['data']['product']['variants']:
                 if var['seller']['code'].upper() == self.store_code:
-                    products.append(var)
-            return products
+                    dkp.add_variant(var)
         except Exception as err:
             raise ScraperException('extract product info error', original_exception=err)
 
@@ -64,17 +85,21 @@ class DigiKalaScraper(Scraper):
 
 
         counter = 1
-        products, tasks = [], []
+        products: List[DigiKalaProduct] = []
+        tasks = []
         for page in pages:
             for product in page['data']['products']:
                 if counter % self.limit_count == 0:
-                    products.extend(itertools.chain(*(await asyncio.gather(*tasks))))
+                    await asyncio.gather(*tasks)
                     tasks.clear()
-                tasks.append(self.__collect_goldis_products('https://api.digikala.com/v2/product/{}/'.format(product['id'])))
+                dkp = DigiKalaProduct(dkp_id=product['id'], title_fa=product['title_fa'])
+                tasks.append(self.__collect_goldis_products('https://api.digikala.com/v2/product/{}/'.format(product['id']),
+                                                             dkp))
+                products.append(dkp)
                 counter += 1
 
         if tasks:
-            products.extend(await asyncio.gather(*tasks))
+            await asyncio.gather(*tasks)
             tasks.clear()
 
         return products
