@@ -16,9 +16,9 @@ class ScraperException(Exception):
 
 
 class Scraper(ABC):
-    def __init__(self, session: ClientSession):
+    def __init__(self):
         super().__init__()
-        self.session = session
+        self.session = ClientSession()
             
     async def __aenter__(self):
         return self
