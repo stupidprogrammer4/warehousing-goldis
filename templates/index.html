@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>انبار موجودی</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="table.css">
+    <!-- Bootstrap Table CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.21.1/dist/bootstrap-table.min.css" rel="stylesheet">
+    
+</head>
+ 
+<body>
+    
+    <div class="container">
+        <h1 class="h1">جدول موجودی انبار گلدیس</h1>
+        
+        <table id="table" 
+                     class="table table-bordered table-hover table-striped"
+                     data-toggle="table"
+                     data-search="true"
+                     data-filter-control="true" 
+                     data-show-export="true"
+                     data-click-to-select="true"
+                     data-toolbar="#toolbar"
+                     style="width: 100%;"
+               class="table-responsive">
+            <thead>
+                <tr>
+                    <th data-field="state"></th>
+                    <th data-field="prenom" data-filter-control="input">نام کالا</th>
+                    <th data-field="date" data-filter-control="select">وزن</th>
+                    <th data-field="examen" data-filter-control="select">عیار</th>
+                    <th data-field="">نام سازنده</th>
+                    <th data-field="note">موجودی</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>شمش</td>
+                    <td>2 گرم</td>
+                    <td>995 عیار</td>
+                    <td>طلای محمد</td>
+                    <td>5 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>پلاک</td>
+                    <td>0.1 گرم</td>
+                    <td>750 عیار</td>
+                    <td>امین زر طهرانی</td>
+                    <td>10 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>طلای محمد</td>
+                    <td>3.98 گرم</td>
+                    <td>995 عیار</td>
+                    <td>طلای محمد</td>
+                    <td>3 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>شمش</td>
+                    <td>0.9 گرم</td>
+                    <td>995 عیار</td>
+                    <td>طلای محمد</td>
+                    <td>20 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>شمش</td>
+                    <td>0.8 گرم</td>
+                    <td>995 عیار</td>
+                    <td>طلای محمد</td>
+                    <td>30 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>شمش</td>
+                    <td>0.7 گرم</td>
+                    <td>995 عیار</td>
+                    <td>طلای محمد</td>
+                    <td>25 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>شمش</td>
+                    <td>0.6 گرم</td>
+                    <td>995 عیار</td>
+                    <td>طلای محمد</td>
+                    <td>10 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>شمش</td>
+                    <td>0.5 گرم</td>
+                    <td>995 عیار</td>
+                    <td>طلای محمد</td>
+                    <td>5 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>پلاک امین زر</td>
+                    <td>1.5 گرم</td>
+                    <td>750 عیار</td>
+                    <td>امین زر طهرانی</td>
+                    <td>12 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>پلاک امین زر</td>
+                    <td>800 سوت</td>
+                    <td>750 عیار</td>
+                    <td>امین زر طهرانی</td>
+                    <td>22 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>پلاک امین زر</td>
+                    <td>700 سوت</td>
+                    <td>عیار 750</td>
+                    <td>امین زر طهرانی</td>
+                    <td>7 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>پلاک امین زر</td>
+                    <td>600 سوت</td>
+                    <td>750 عیار</td>
+                    <td>امین زر طهرانی</td>
+                    <td>34 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>پلاک امین زر</td>
+                    <td>400 سوت</td>
+                    <td>750 عیار</td>
+                    <td>امین زر طهرانی</td>
+                    <td>15 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>پلاک امین زر</td>
+                    <td>300 سوت</td>
+                    <td>750 عیار</td>
+                    <td>امین زر طهرانی</td>
+                    <td>28 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>پلاک امین زر</td>
+                    <td>250 سوت</td>
+                    <td>750 عیار</td>
+                    <td>امین زر طهرانی</td>
+                    <td>18 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>پلاک امین زر</td>
+                    <td>600 سوت</td>
+                    <td>750 عیار</td>
+                    <td>امین زر طهرانی</td>
+                    <td>34 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>پلاک امین زر</td>
+                    <td>200 سوت</td>
+                    <td>750 عیار</td>
+                    <td>امین زر طهرانی</td>
+                    <td>19عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>پلاک امین زر</td>
+                    <td>150 سوت</td>
+                    <td>750 عیار</td>
+                    <td>امین زر طهرانی</td>
+                    <td>22 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>شمش</td>
+                    <td>100 گرم</td>
+                    <td>999 عیار</td>
+                    <td>ساویس</td>
+                    <td>30 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>شمش</td>
+                    <td>100 گرم</td>
+                    <td>995 عیار</td>
+                    <td>ساویس</td>
+                    <td>20 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>شمش</td>
+                    <td>50 گرم</td>
+                    <td>999 عیار</td>
+                    <td>ساویس</td>
+                    <td>14 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>شمش</td>
+                    <td>10 گرم</td>
+                    <td>995 عیار</td>
+                    <td>طلای محمد</td>
+                    <td>8 عدد</td>
+                </tr>
+                <tr>
+                    <td class="bs-checkbox "></td>
+                    <td>پلاک امین زر</td>
+                    <td>500 سوت</td>
+                    <td>750 عیار</td>
+                    <td>امین زر طهرانی</td>
+                    <td>16 عدد</td>
+                </tr>
+                
+            </tbody>
+        </table>
+        </div>
+        
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Table JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.21.1/dist/bootstrap-table.min.js"></script>
+    <!-- Bootstrap Table Filter Control Extension -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.21.1/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+    <!-- Bootstrap Table Filter Control Extension -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.21.1/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+    <script src="table.js"></script>  
+        
+</body>
+</html>
