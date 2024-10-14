@@ -4,6 +4,8 @@ from database.models.base_model import Base
 from contextlib import asynccontextmanager
 from sqlalchemy.exc import SQLAlchemyError
 import logging
+from .models.user import *
+from .models.product import *
 
 async_engine = create_async_engine(
     f'postgresql+asyncpg://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}',

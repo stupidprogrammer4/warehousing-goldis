@@ -8,6 +8,6 @@ class Base(DeclarativeBase, AsyncAttrs):
 
 class BaseModel(Base):
     __abstract__ = True
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.now)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.now, nullable=False)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True, onupdate=datetime.now)
