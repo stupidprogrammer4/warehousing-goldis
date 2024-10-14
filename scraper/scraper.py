@@ -18,9 +18,9 @@ class ScraperException(Exception):
 class Scraper(ABC):
     def __init__(self):
         super().__init__()
-        self.session = ClientSession()
             
     async def __aenter__(self):
+        self.session = ClientSession()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
@@ -30,15 +30,7 @@ class Scraper(ABC):
             raise ScraperException('cannot close session', original_exception=err)
 
     @abstractmethod
-    async def decrease_product(self, **kwargs):     
-        raise NotImplementedError()
-    
-    @abstractmethod
-    async def increase_product(self, **kwargs):
-        raise NotImplementedError()
-    
-    @abstractmethod
-    async def get_product_page(self, **kwargs):
+    async def change_stock_of_product(self, pid, count: int):
         raise NotImplementedError()
     
     @abstractmethod
