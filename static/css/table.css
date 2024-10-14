@@ -1,0 +1,8 @@
+.bootstrap-table .fixed-table-container .table thead th{
+    vertical-align: super !important ;
+}
+
+body{
+    text-align: right;
+}
+
